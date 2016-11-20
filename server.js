@@ -30,8 +30,8 @@ app.get("/test", function(req, res) {
 
           entry.description = entry.description.toUpperCase();
 
-          data += entry.description.length + "," + entry.description +
-            ",1\n";
+          data += "1000\n" + entry.description.length + "\n" + entry.description +
+            "\n";
           console.log(data);
         }
         res.header('Content-Type', 'text/plain');
