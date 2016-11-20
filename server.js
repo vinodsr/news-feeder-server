@@ -5,6 +5,28 @@ var app = express();
 
 const SERVER_PORT = 3000;
 
+function toASCII(chars) {
+  var ascii = '';
+  for (var i = 0, l = chars.length; i < l; i++) {
+    var c = chars[i].charCodeAt(0);
+    if (chars[i] == "’") {
+      ascii += "'";
+    } else if (chars[i] == "”") {
+      ascii += "\"";
+    } else if (chars[i] == "“") {
+      ascii += "\"";
+    } else {
+      if (c >= 0xFF00 && c <= 0xFFEF) {
+        c = 0xFF & (c + 0x20);
+      }
+
+      ascii += String.fromCharCode(c);
+    }
+  }
+
+  return ascii;
+}
+
 
 app.get("/test", function(req, res) {
   var data = "";
@@ -30,7 +52,8 @@ app.get("/test", function(req, res) {
 
           entry.description = entry.description.toUpperCase();
 
-          data += "1000\n" + entry.description.length + "\n" + entry.description +
+          data += "1000\n" + entry.description.length + "\n" + toASCII(
+              entry.description) +
             "\n";
           console.log(data);
         }
